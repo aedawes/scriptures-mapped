@@ -1,5 +1,5 @@
-# Homework 5
+# The Scriptures, Mapped
 
-It has been a long time since I did any javascript/functional webpage without using a front end framework such as Vue.js or React.js. When I did do something like this in the past, it was never as in depth as I was just learning so there was no need to access a backend or database of any kind. This assignment was a great refresher on how to use javascript to create a functional webpage and to query using ajax. I read more in depth into ajax and about callbacks because it had been a while since I had used them. I learned a lot more about ajax, callbacks, and how to write a clean JS file as the main benefits from this assignment.
+This is a project in progress. This project will show a visual web representation of each location mentioned in the King James Version of the Bible as well as other texts used by the Church of Jesus Christ of Latter Day Saints. The data for this project is pulled from a database maintained by Dr. Steven Liddle at Brigham Young University.
 
 
