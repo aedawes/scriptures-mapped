@@ -18,7 +18,7 @@
     <meta name="theme-color" content="#fafafa">
 
     <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
-                ({ key: "YOUR_API_KEY_HERE", v: "weekly" });</script>
+                ({ key: '<GOOGLE_MAPS_API_KEY>', v: "weekly" });</script> 
 
     <script defer src="https://unpkg.com/@googlemaps/markerwithlabel/dist/index.min.js"></script>
 </head>
@@ -32,29 +32,75 @@
         </div>
     </header>
     <div id="content">
-        <nav id="scriptures"></nav>
+        <div id="scriptureContent">
+            <div id="chapterNavigation"></div>
+            <nav id="scriptures"></nav>
+        </div>
         <article id="map"></article>
     </div>
 
-    <script src="js/scriptures.js"></script>
+    <script defer src="js/scriptures.js"></script>
 
     <script type="text/javascript">
-        function ready(fn) {
+
+        let map;
+        let mapIsLoaded = false;
+
+        async function initMap() {
+            const { Map } = await google.maps.importLibrary('maps');
+
+            map = new Map(document.getElementById('map'), {
+                center: { lat: 31.7, lng: 35.2 },
+                fullscreenControl: false,
+                mapTypeControl: false,
+                mapTypeId: 'terrain',
+                streetViewControl: false,
+                zoom: 8,
+                zoomControl: true,
+                zoomControlOptions: {
+                  position: google.maps.ControlPosition.RIGHT_BOTTOM
+                }
+            });
+
+            mapIsLoaded = true;
+        }
+
+        initMap();
+
+        function ready(readyListener) {
             if (document.readyState !== 'loading') {
-                console.log("Already ready");
-                fn();
+                readyListener();
             } else {
-                console.log("Setting up event listener.");
-                document.addEventListener('DOMContentLoaded', fn);
+                document.addEventListener('DOMContentLoaded', readyListener);
             }
         }
 
         ready(function () {
-            // ...
-            console.log("Document is now ready.");
-            window.onhashchange = function () {
-                console.log("Hash changed to: " + window.location.hash);
-            }
+            scriptures.init(() => {
+                window.addEventListener('hashchange', scriptures.onHashChanged);
+                scriptures.onHashChanged();
+
+                window.showLocation = function (
+                    geotagId,
+                    placeName,
+                    latitude, 
+                    longitude,
+                    viewLatitude,
+                    viewTilt,
+                    viewRoll,
+                    viewAltitude,
+                    ViewHeading
+                ){
+                    map.panTo(new google.maps.LatLng(latitude, longitude));
+
+                    if(viewAltitude === 5000){
+                        map.setZoom(viewAltitude / 450); // To fix the zoom level for D&C
+                    } else {
+                        const zoomLevel = Math.log2(591657550.5 / viewAltitude) - 2
+                        map.setZoom(zoomLevel);
+                    }
+                };
+            });
         });
     </script>
 </body>
