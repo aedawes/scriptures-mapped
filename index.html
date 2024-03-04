@@ -18,7 +18,7 @@
     <meta name='theme-color' content='#fafafa'>
 
     <script>(g => { var h, a, k, p = 'The Google Maps JavaScript API', c = 'google', l = 'importLibrary', q = '__ib__', m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement('script')); e.set('libraries', [...r] + ''); for (k in g) e.set(k.replace(/[A-Z]/g, t => '_' + t[0].toLowerCase()), g[k]); e.set('callback', c + '.maps.' + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + ' could not load.')); a.nonce = m.querySelector('script[nonce]')?.nonce || ''; m.head.append(a) })); d[l] ? console.warn(p + ' only loads once. Ignoring:', g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
-                ({ key: '<GOOGLE_MAPS_API_KEY>', v: 'weekly' });</script> 
+                ({ key: '', v: 'weekly' });</script> 
 
     <script defer src='https://unpkg.com/@googlemaps/markerwithlabel/dist/index.min.js'></script>
 </head>
@@ -39,9 +39,11 @@
         <article id='map'></article>
     </div>
 
-    <script defer src='js/scriptures.js'></script>
+    <script type='module' src='js/scriptures.js'></script>
 
-    <script type='text/javascript'>
+    <script type="module">
+
+        import { init as initScriptures, onHashChanged } from '../js/scriptures.js';
 
         let map;
         let mapIsLoaded = false;
@@ -58,7 +60,7 @@
                 zoom: 8,
                 zoomControl: true,
                 zoomControlOptions: {
-                  position: google.maps.ControlPosition.RIGHT_BOTTOM
+                    position: google.maps.ControlPosition.RIGHT_BOTTOM
                 }
             });
 
@@ -76,24 +78,24 @@
         }
 
         ready(function () {
-            scriptures.init(() => {
+            initScriptures(() => {
                 window.addEventListener('hashchange', scriptures.onHashChanged);
-                scriptures.onHashChanged();
+                onHashChanged();
 
                 window.showLocation = function (
                     geotagId,
                     placeName,
-                    latitude, 
+                    latitude,
                     longitude,
                     viewLatitude,
                     viewTilt,
                     viewRoll,
                     viewAltitude,
                     ViewHeading
-                ){
+                ) {
                     map.panTo(new google.maps.LatLng(latitude, longitude));
 
-                    if(viewAltitude === 5000){
+                    if (viewAltitude === 5000) {
                         map.setZoom(viewAltitude / 450); // To fix the zoom level for D&C
                     } else {
                         const zoomLevel = Math.log2(591657550.5 / viewAltitude) - 2
