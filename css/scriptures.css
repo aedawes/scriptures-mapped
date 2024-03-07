@@ -4,7 +4,7 @@ body {
   min-height: 100%;
   margin: 0;
   padding: 0;
-  color: #222;
+  color: #222222;
   background-color: rgb(236,226,217);
   font-weight: bold;
   font-size: 10pt;
@@ -24,15 +24,19 @@ html {
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  font-family: "Questrial", sans-serif;
+  font-size: 1.3rem;
   font-weight: normal;
 }
 
 #chapterNavigation {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  border: 1px solid #aaa;
+  position: absolute;
+  top: 2rem;
+  left: 0.3rem;
+  display: flex;
+  width: auto;
+  z-index: 5;
 }
 
 #content {
@@ -40,7 +44,7 @@ html {
   flex-direction: row;
   position: absolute;
   align-content: stretch;
-  top: 56px;
+  top: 75px;
   right: 0;
   left: 0;
   bottom: 0;
@@ -48,33 +52,51 @@ html {
   overflow-y: auto;
 }
 
-#crumbs {
-  padding-left: 1.25em;
-  order: -1;
+#content #crumbs {
+  display: none;
 }
 
 #header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  height: 56px;
+  height: 75px;
   z-index: 10000;
-  background-color: #3f2000;
-  color: white;
+  background-color: #4B4E6D;
+  color: #E5E7EE;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
+#header #crumbs {
+  font-family: 'poppins', sans-serif;
+  font-weight: 300;
+  color: #E5E7EE;
+  position: absolute;
+  left: 0;
+  padding-left: 1.25em;
+  order: -1;
+}
+
 #header a:hover {
-  color: #d0d0ff;
+  background-color: #6c6e84;
+  padding: .5em;
+  border-radius: 3px;
+  color: #E5E7EE;
   text-decoration: underline;
 }
 
 #header a:link, #header a:visited, #header a:active {
-  color: white;
+  color: #E5E7EE;
+  text-decoration: none;
+}
+
+#crumbs a:link, #crumbs a:visited, #crumbs a:active {
+  color: #E5E7EE;
   text-decoration: none;
 }
 
@@ -83,21 +105,20 @@ html {
 }
 
 #navIconLeft {
-  margin-right: auto;
-  color:rgb(28, 26, 25);
-  font-size: 30px;
-
+  position: absolute;
+  left: 1rem;
+  color: #E5E7EE;
 }
 
 #navIconRight {
-  margin-left: auto;
-  color:rgb(28, 26, 25);
-  font-size: 30px;
+  position: absolute;
+  right: 1rem;
+  color: #E5E7EE;
 }
 
 #scriptureContent {
-  width: 20rem;
-  background-color: rgb(227, 225, 224);
+  width: 30rem;
+  background-color: #222222;
   border-right: 1px solid #aaa;
 }
 
@@ -105,7 +126,6 @@ html {
   position: absolute;
   max-height: 100%;
   width: 100%;
-  padding: 0.5em;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -116,7 +136,7 @@ html {
   height: 100%;
   min-height: 100%;
   min-width: 220px;
-  max-width: 440px;
+  max-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   border-right: 1px solid #aaa;
@@ -143,6 +163,7 @@ div.books {
   margin: 0;
   margin-bottom: 3em;
   padding: 0 .3em;
+  font-family: "Poppins", sans-serif;
 }
 
 div.books a {
@@ -152,11 +173,15 @@ div.books a {
   padding: .5em;
   padding-right: 0.1rem;
   padding-left: 0.1rem;
-  background-color: #ffffff;
-  color: #222;
+  background-color: #6c6e84;
+  color: #E5E7EE;
   text-decoration: none;
   text-align: center;
   border-radius: 3px;
+}
+
+div.books a:hover{
+  background-color: #9a9db7;
 }
 
 div.books a.chapter {
@@ -164,6 +189,8 @@ div.books a.chapter {
 }
 
 div.chapterheading {
+  background-color: #9da0c2;
+  color: #222222;
   padding: .5em;
   font-size: 14pt;
   font-weight: bold;
@@ -175,9 +202,14 @@ div.chapterheading b.big {
 }
 
 div.navheading {
+  padding: 0.3rem;
+  border-bottom: 1px solid #4B4E6D;
+  color: #E5E7EE;
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   font-size: 13pt;
   text-align: center;
 }
@@ -196,7 +228,7 @@ div.subtitle {
 .material-icons {
   padding: 0.2rem;
   vertical-align: middle;
-  font-size: 15px;
+  font-size: 30px;
 }
 
 .navheading a:hover {
@@ -216,24 +248,26 @@ div.subtitle {
 
 .scripturewrapper {
   position: absolute;
+  width: 100%;
   min-height: 100%;
   max-height: 100%;
   padding-bottom: 3rem;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: white;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-color: #222222;
+  color: #E5E7EE;
+  font-family: 'poppins', sans-serif;
   font-size: 12pt;
-  font-weight: normal;
+  font-weight: 200;
 }
 
 .scripturewrapper li a:hover {
-  color: #4488ff;
+  color: rgb(116, 116, 190);
   text-decoration: underline;
 }
 
 .scripturewrapper li a:link, .scripturewrapper li a:visited, .scripturewrapper li a:active {
-  color: #44b;
+  color: #8e8ef8;
   text-decoration: none;
 }
 
@@ -253,6 +287,10 @@ ul.versesblock li.sectionHeader {
 }
 
 .volume {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Questrial", sans-serif;
   padding: .5em;
   font-size: 12pt;
 }
@@ -262,6 +300,54 @@ ul.versesblock li.sectionHeader {
 }
 
 .volume h1 {
-  color:rgb(28, 26, 25);
+  color:#E5E7EE;
   font-size: 1.24rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 800px) {
+  #centerhead {
+    font-size: 1rem;
+  }
+
+  #content {
+    flex-direction: column;
+    position: absolute;
+    align-content: stretch;
+    top: 56px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  #header #crumbs {
+    display: none;
+  }
+
+  #content #crumbs {
+    font-family: 'poppins', sans-serif;
+    font-weight: 300;
+    color: #E5E7EE;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 5rem;
+    background-color: #4B4E6D;
+    position: relative;
+    left: 0;
+    padding-left: 1.25em;
+    order: 2;
+  }
+
+  #scriptureContent {
+    order: 3;
+    height: 100%;
+    width: 100%;
+  }
+
+  #map {
+    order: 1;
+  }
 }

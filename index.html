@@ -12,7 +12,14 @@
     <meta property='og:url' content=''>
     <meta property='og:image' content=''>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet"
+    >
     <link rel='stylesheet' href='css/scriptures.css'>
 
     <meta name='theme-color' content='#fafafa'>
@@ -25,15 +32,14 @@
 <body>
 
     <header id='header'>
-        <div id='crumbs'></div>
         <div id='centerhead'>
-            <div class='title'>Project 1: The Scriptures, Mapped</div>
-            <div class='subtitle'>By Anais Dawes</div>
+            <div class='title'>The Scriptures Mapped</div>
         </div>
+        <div id='crumbs'></div>
     </header>
     <div id='content'>
+        <div id='crumbs'></div>
         <div id='scriptureContent'>
-            <div id='chapterNavigation'></div>
             <nav id='scriptures'></nav>
         </div>
         <article id='map'></article>
@@ -44,9 +50,10 @@
     <script type="module">
 
         import { init as initScriptures, onHashChanged } from '../js/scriptures.js';
+        import { customDarkTheme } from '../js/mapTheme.js';
 
         let map;
-        let mapIsLoaded = false;
+        window.mapIsLoaded = false;
 
         async function initMap() {
             const { Map } = await google.maps.importLibrary('maps');
@@ -61,10 +68,11 @@
                 zoomControl: true,
                 zoomControlOptions: {
                     position: google.maps.ControlPosition.RIGHT_BOTTOM
-                }
+                },
+                styles: customDarkTheme
             });
 
-            mapIsLoaded = true;
+            window.mapIsLoaded = true;
         }
 
         initMap();
@@ -95,35 +103,17 @@
                 ) {
                     map.panTo(new google.maps.LatLng(latitude, longitude));
 
-                    if (viewAltitude === 5000) {
-                        map.setZoom(viewAltitude / 450); // To fix the zoom level for D&C
-                    } else {
-                        const zoomLevel = Math.log2(591657550.5 / viewAltitude) - 2
-                        map.setZoom(zoomLevel);
-                    }
+                    google.maps.event.addListenerOnce(map, 'idle', function () {
+                        if (viewAltitude === 5000) {
+                            map.setZoom(viewAltitude / 450);
+                        } else {
+                            const zoomLevel = Math.log2(591657550.5 / viewAltitude) - 2;
+                            map.setZoom(zoomLevel);
+                        }
+                    });
                 };
             });
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -32,8 +32,10 @@ function init(callback) {
       if (booksLoaded) {
         cacheBooks(callback);
       }
-    }
-  );
+    });
+
+    window.addEventListener('hashchange', onHashChanged);
+    onHashChanged(); //FIXME: Look here
 };
 
 function onHashChanged(event) {

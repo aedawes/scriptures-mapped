@@ -1,16 +1,23 @@
 function renderNavigationArrows(bookId, chapter) {
-  document.getElementById('crumbs').innerHTML = `<a href="#">${window.volumes[window.books[bookId].parentBookId - 1].fullName}</a>`
+  const content = `<a href="#">${window.volumes[window.books[bookId].parentBookId - 1].fullName}</a>`
     + `<span class="material-icons">chevron_right</span>`
     + `<a href="#${window.books[bookId].parentBookId}:${bookId}">${window.books[bookId].fullName}</a>`
     + `<span class="material-icons">chevron_right</span>`
     + `<a href="#${window.books[bookId].parentBookId}:${bookId}:${chapter}">${chapter}</a>`;
+
+  document.getElementById('crumbs').innerHTML = content;
+  document.querySelector('#content #crumbs').innerHTML = content;
   
-  document.getElementById('chapterNavigation').innerHTML = `<a href='${findNextChapter(bookId, chapter - 1)}'>`
-    + `<span id='navIconLeft' class="material-icons">arrow_back</span>`
-    + `</a>`
-    + `<a href='${findNextChapter(bookId, chapter + 1)}'>`
-    + `<span id='navIconRight' class="material-icons">arrow_forward</span>`
-    + `</a>`;
+  const leftArrow = `<a id='navIconLeft' href='${findNextChapter(bookId, chapter - 1)}'>
+      <span class="material-icons">arrow_back</span>
+      </a>`
+
+  const rightArrow = `<a id='navIconRight' href='${findNextChapter(bookId, chapter + 1)}'>
+    <span class="material-icons">arrow_forward</span>
+    </a>`;
+
+  const navHeading = document.getElementsByClassName('navheading');
+  navHeading[0].innerHTML = `${leftArrow}${navHeading[0].innerHTML}${rightArrow}`
 };
 
 function extractGeoplaces() {

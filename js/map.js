@@ -1,3 +1,4 @@
+let mapIsLoaded = window.mapIsLoaded;
 let mapMarkers = [];
 
 function clearMapPins() {
